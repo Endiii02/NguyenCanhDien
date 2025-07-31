@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Endiii đây hẹ hẹ hẹ</title>
+  <title>Giới thiệu cá nhân có nhạc nền cute</title>
   
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Bangers&display=swap" rel="stylesheet" />
@@ -163,6 +163,8 @@
       font-size: 14px;
       max-width: 320px;
       user-select: none;
+      transform: scale(0.85);
+      transform-origin: top left;
     }
 
     .custom-player {
@@ -314,7 +316,7 @@
 
     .volume-control input {
       width: 100px;
-      margin-top: 6px;
+      margin-top: 5px;
     }
 
     @media (max-width: 480px) {
@@ -355,6 +357,44 @@
         width: 80px;
       }
     }
+    /* Tối ưu hiển thị cho thiết bị di động nhỏ */
+@media (max-width: 480px) {
+  .container {
+    width: 90%;
+    margin: 160px auto 20px auto;
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .social-button {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .avatar,
+  .top-left-player,
+  .music-controls {
+    transform: scale(0.85); /* thu nhỏ các phần cố định */
+  }
+
+  .top-left-player {
+    top: 10px;
+    left: 10px;
+  }
+
+  .music-info {
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .info {
+    font-size: 14px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -366,7 +406,7 @@
   </video>
 
   <div id="clickToPlay" style="display: none;">
-    <p>🎵 Nhấn vào đây để biết thêm về anh ấy</p>
+    <p>🎵 Nhấn vào đây để bắt đầu phát nhạc</p>
     <button>Bắt đầu</button>
   </div>
 
