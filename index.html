@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Endiii Đây Hẹ Hẹ Hẹ</title>
-  
+  <title>endiii đây hẹ hẹ hẹ</title>
+
+   <!-- Favicon -->
+  <link rel="icon" href="favicon/favicon.ico" type="image/png">
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Bangers&display=swap" rel="stylesheet" />
   
@@ -194,19 +197,17 @@
       gap: 8px;
     }
 
-    .controls button {
-      background: #ffebf2;
-      color: #ff6f91;
-      font-size: 18px;
-      border: 2px dashed #ff6f91;
-      transition: all 0.3s ease;
-      border-radius: 50%;
-      padding: 8px 12px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(255, 111, 145, 0.6);
-      flex-shrink: 0;
-      user-select: none;
-    }
+  .controls button {
+  background: transparent;
+  color: #ff6f91;
+  font-size: 20px;
+  border: none;
+  padding: 4px 6px;
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+
 
     .controls button:hover {
       background: #fff5f8;
@@ -324,16 +325,37 @@
         justify-content: flex-start;
         padding-top: 100px;
       }
-      .container {
-        width: 90%;
-        max-width: none;
-        padding: 20px 15px;
+       .container {
+        width: 85%;
+        max-width: 320px;
+        margin: 120px auto 20px auto;
+        padding: 14px 10px;
         border-radius: 14px;
+        transform: scale(0.95); /* nhẹ nhàng thu nhỏ toàn bộ */
       }
       .avatar {
-        width: 100px;
-        height: 100px;
+        width: 85px;
+        height: 85px;
       }
+      .info h2 {
+    font-size: 18px;
+  }
+
+  .info p {
+    font-size: 13px;
+  }
+
+  .links a {
+    font-size: 13px;
+    padding: 8px 12px;
+    max-width: 100%;
+  }
+
+  .tick-icon-png {
+    width: 16px;
+    height: 16px;
+  }
+}
       .links a {
         max-width: 100%;
         font-size: 14px;
@@ -357,41 +379,55 @@
         width: 80px;
       }
     }
-    /* Tối ưu hiển thị cho thiết bị di động nhỏ */
-@media (max-width: 480px) {
-  .container {
-    width: 90%;
-    margin: 160px auto 20px auto;
-    padding: 16px;
-    border-radius: 16px;
-  }
-
-  .social-button {
-    font-size: 14px;
-    padding: 10px 12px;
-  }
-
-  .avatar,
-  .top-left-player,
-  .music-controls {
-    transform: scale(0.85); /* thu nhỏ các phần cố định */
-  }
-
+    @media (max-width: 480px) {
   .top-left-player {
-    top: 10px;
-    left: 10px;
+    display: none;
+  }
+}
+
+    /* Tối ưu hiển thị cho thiết bị di động nhỏ */
+@media (max-width: 768px) {
+  .top-left-player {
+    max-width: 90vw;
+    font-size: 11px;
+    transform: scale(0.75); /* Thu nhỏ toàn bộ */
+    left: 8px;
+    top: 8px;
   }
 
-  .music-info {
-    font-size: 12px;
+  .custom-player {
+    padding: 6px 10px;
+    border-radius: 10px;
+    gap: 6px;
   }
 
-  h1 {
-    font-size: 20px;
+  #trackTitle {
+    font-size: 13px;
   }
 
-  .info {
+  .controls button {
     font-size: 14px;
+    padding: 6px 10px;
+    box-shadow: 0 2px 8px rgba(255, 111, 145, 0.4);
+  }
+
+  #seekBar {
+    height: 4px;
+  }
+
+  .volume-control input {
+    width: 60px;
+  }
+
+  .thumb {
+    width: 36px;
+    height: 36px;
+    box-shadow: 0 0 6px rgba(255, 111, 145, 0.5);
+  }
+
+  .clock {
+    font-size: 12px;
+    margin-top: 4px;
   }
 }
 
@@ -405,8 +441,26 @@
     Trình duyệt không hỗ trợ video nền.
   </video>
 
+  <!-- NÚT ẨN/HIỆN PLAYER -->
+<button id="togglePlayerBtn" style="
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1001;
+  background: #ff6f91;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 111, 145, 0.6);
+  font-family: 'Fredoka One', cursive;
+">
+   🎵
+</button>
+
   <div id="clickToPlay" style="display: none;">
-    <p>🎵 Nhấn vào đây để bắt đầu phát nhạc</p>
+    <p>🎵 Nhấn vào đây để biết thêm về anh ấy</p>
     <button>Bắt đầu</button>
   </div>
 
@@ -624,6 +678,22 @@
   audio.addEventListener('error', () => {
     console.warn("⚠️ Không thể phát bài hát:", audio.error);
   });
+  // Ẩn/hiện player khi bấm nút
+const toggleBtn = document.getElementById('togglePlayerBtn');
+const playerBox = document.querySelector('.top-left-player');
+let isPlayerVisible = window.innerWidth > 480; // hiện mặc định trên máy tính
+
+if (!isPlayerVisible) {
+  playerBox.style.display = 'none';
+  toggleBtn.textContent = 'Hiện Player 🔈';
+}
+
+toggleBtn.addEventListener('click', () => {
+  isPlayerVisible = !isPlayerVisible;
+  playerBox.style.display = isPlayerVisible ? 'block' : 'none';
+  toggleBtn.textContent = isPlayerVisible ? ' 🎵' : ' 🔈';
+});
+
 </script>
 </body>
 </html>
